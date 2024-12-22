@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CategoriesScreenController extends GetxController{
   // Text Controllers for input fields
@@ -30,11 +31,15 @@ class CategoriesScreenController extends GetxController{
     try {
       isLoading.value = true;
 
+      final sharedPref = await SharedPreferences.getInstance();
+      String? uid =  sharedPref.getString('uid'); 
+
       // Data to be added
       Map<String, dynamic> categoryData = {
         "title": titleController.text.trim(),
         "imoji": imojiController.text.trim(),
         "task": [],
+        'uid': uid
       };
 
       // Add to 'categories' collection
