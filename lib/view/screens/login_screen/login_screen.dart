@@ -14,7 +14,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginAccountController loginAccountController = Get.put(LoginAccountController());
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 28, 36, 47),
+        
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(

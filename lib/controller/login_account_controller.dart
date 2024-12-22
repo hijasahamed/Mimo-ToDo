@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mimo_flutter_app/controller/firebase_authentication_controller.dart';
+import 'package:mimo_flutter_app/controller/firebase_controller.dart';
 import 'package:mimo_flutter_app/main.dart';
-import 'package:mimo_flutter_app/view/screens/home_screen/home_screen.dart';
+import 'package:mimo_flutter_app/view/screens/categories_screen/categories_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginAccountController extends GetxController {
@@ -21,6 +22,7 @@ class LoginAccountController extends GetxController {
   // Firebase instances
   final FirebaseAuthService authService = FirebaseAuthService();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseController firebaseController = Get.put(FirebaseController());
 
   // Validate and create an account
   void validateAndSubmit() {
@@ -44,6 +46,11 @@ class LoginAccountController extends GetxController {
         // Setting user as logged
         final sharedPref = await SharedPreferences.getInstance();
         await sharedPref.setBool(logedInKey, true);
+        dynamic userData = await firebaseController.checkIfUserAvailable(emailController.text.trim().toLowerCase());
+        await sharedPref.setString('uid', userData.uid);
+        await sharedPref.setString('email', userData.email);
+        await sharedPref.setString('name', userData.name);
+
         // Login successful
         Get.snackbar(
           "Login Successful",
@@ -54,7 +61,7 @@ class LoginAccountController extends GetxController {
         );
 
         // Navigate to home screen
-        Get.to(() => const HomeScreen());
+        Get.to(() => CategoriesScreen(screenSize: MediaQuery.of(Get.context!).size,));
       } else {
         // Login failed
         Get.snackbar("Login Failed", "No account found with this email. Please create an account.", colorText: Colors.white);

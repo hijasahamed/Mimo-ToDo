@@ -3,8 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mimo_flutter_app/controller/firebase_authentication_controller.dart';
+import 'package:mimo_flutter_app/controller/firebase_controller.dart';
 import 'package:mimo_flutter_app/main.dart';
-import 'package:mimo_flutter_app/view/screens/home_screen/home_screen.dart';
+import 'package:mimo_flutter_app/view/screens/categories_screen/categories_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateAccountController extends GetxController {
@@ -23,6 +24,7 @@ class CreateAccountController extends GetxController {
   // Firebase instances
   final FirebaseAuthService authService = FirebaseAuthService();
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  FirebaseController firebaseController = Get.put(FirebaseController());
 
   // Validate and create an account
   void validateAndSubmit() {
@@ -53,6 +55,10 @@ class CreateAccountController extends GetxController {
         // Setting user as logged
         final sharedPref = await SharedPreferences.getInstance();
         await sharedPref.setBool(logedInKey, true);
+        dynamic userData = await firebaseController.checkIfUserAvailable(emailController.text.trim().toLowerCase());
+        await sharedPref.setString('uid', userData.uid);
+        await sharedPref.setString('email', userData.email);
+        await sharedPref.setString('name', userData.name);
 
         // Show success message
         Get.snackbar(
@@ -65,7 +71,7 @@ class CreateAccountController extends GetxController {
         );
 
         // Navigate to login or home screen
-        Get.to(() => const HomeScreen());
+        Get.to(() => CategoriesScreen(screenSize: MediaQuery.of(Get.context!).size,));
       } else {
         // Show error message if user signup failed
         Get.snackbar(

@@ -2,13 +2,13 @@ import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mimo_flutter_app/main.dart';
-import 'package:mimo_flutter_app/view/screens/home_screen/home_screen.dart';
+import 'package:mimo_flutter_app/view/screens/categories_screen/categories_screen.dart';
 import 'package:mimo_flutter_app/view/screens/login_screen/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreenController extends GetxController{
 
-
+  // Fun to check if user is loggedin
   Future<void> checkIfUserLogedin(context) async{
     // sharedpreference & connectivity instances
     final sharedPref = await SharedPreferences.getInstance();
@@ -30,7 +30,7 @@ class SplashScreenController extends GetxController{
     }
     else if(isLogedin == true){
       await Future.delayed(const Duration(milliseconds: 1500));
-      Get.offAll(() => const HomeScreen());
+      Get.offAll(() => CategoriesScreen(screenSize: MediaQuery.of(Get.context!).size,));
     }
     else if(isLogedin == false){
       await Future.delayed(const Duration(milliseconds: 1500));
