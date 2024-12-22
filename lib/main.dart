@@ -2,8 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mimo_flutter_app/firebase_options.dart';
-import 'package:mimo_flutter_app/view/screens/forgot_password_screen/forgot_password_screen.dart';
-import 'package:mimo_flutter_app/view/screens/login_screen/login_screen.dart';
+import 'package:mimo_flutter_app/view/screens/splash_screen/splash_screen.dart'; 
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +11,8 @@ Future<void> main() async {
   );
   runApp(const MyApp());
 }
+
+const logedInKey = 'Userlogedin';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Mimo',   
       debugShowCheckedModeBanner: false,
-      home: ForgotPasswordScreen(screenSize: screenSize,),
+      home: SplashScreen(screenSize: screenSize,),
     );
   }
 }

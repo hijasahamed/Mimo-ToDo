@@ -26,7 +26,7 @@ class ForgotPasswordScreen extends StatelessWidget {
             padding: EdgeInsets.only(left: screenSize.width/13,right: screenSize.width/13),
             child: ContinueButtonWidget(screenSize: screenSize,controller: forgotPasswordController,),
           ),
-          RegisterButtonWidget(screenSize: screenSize,),
+          RegisterButtonWidget(screenSize: screenSize,forgotPasswordPage: true,),
         ],
        ),
       ),

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mimo_flutter_app/view/screens/login_screen/login_screen.dart';
 
 class ForgotPasswordController extends GetxController {
   // Text Controllers for input fields
@@ -13,14 +14,14 @@ class ForgotPasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   // Validate and send the reset password email
-  void validateAndSubmit(BuildContext context) {
+  void validateAndSubmit() {
     if (formKey.currentState!.validate()) {
-      changePassword(context);
+      changePassword();
     }
   }
 
   // Change password logic
-  void changePassword(BuildContext context) async {
+  void changePassword() async {
     isLoading.value = true;
 
     final email = emailController.text.trim();
@@ -36,6 +37,8 @@ class ForgotPasswordController extends GetxController {
             colorText: Colors.white,
           );
         },
+      ).then(
+        (value) => Get.offAll(() => LoginScreen(screenSize: MediaQuery.of(Get.context!).size)),
       );
     } on FirebaseAuthException catch (e) {
       // Handle errors gracefully

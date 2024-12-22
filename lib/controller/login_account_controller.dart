@@ -3,7 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mimo_flutter_app/controller/firebase_authentication_controller.dart';
+import 'package:mimo_flutter_app/main.dart';
 import 'package:mimo_flutter_app/view/screens/home_screen/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginAccountController extends GetxController {
   // Text Controllers for input fields
@@ -38,6 +40,10 @@ class LoginAccountController extends GetxController {
       );
 
       if (user != null) {
+        
+        // Setting user as logged
+        final sharedPref = await SharedPreferences.getInstance();
+        await sharedPref.setBool(logedInKey, true);
         // Login successful
         Get.snackbar(
           "Login Successful",

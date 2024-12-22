@@ -8,11 +8,13 @@ class RegisterButtonWidget extends StatelessWidget {
   const RegisterButtonWidget({
     super.key,
     required this.screenSize,
-    this.registerPage
+    this.registerPage,
+    this.forgotPasswordPage
   });
 
   final Size screenSize;
   final bool? registerPage;
+  final bool? forgotPasswordPage;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +26,7 @@ class RegisterButtonWidget extends StatelessWidget {
           MimoTextWidget(text: (registerPage== true)? 'Already have an account?' : "Don't have an account?", color: Colors.white70, size: screenSize.width/30, weight: FontWeight.w500),
           TextButton(
             onPressed: () {
-              (registerPage==true)? Get.to(LoginScreen(screenSize: screenSize,)) : Get.to(() => RegisterScreen(screenSize: screenSize));
+              (registerPage==true)? Get.offAll(LoginScreen(screenSize: screenSize,)) : (forgotPasswordPage==true)? Get.off(() => RegisterScreen(screenSize: screenSize)) : Get.to(() => RegisterScreen(screenSize: screenSize));
             },
             child: MimoTextWidget(text: (registerPage== true)? 'Log In' :  'Register', color: Colors.white, size: screenSize.width/30, weight: FontWeight.w500,decor: TextDecoration.underline,),
           ),
