@@ -5,18 +5,17 @@ import 'package:get/get.dart';
 class DetailsScreenController extends GetxController{
 
   final taskController = TextEditingController();
+  final dateController = TextEditingController();
 
   Future<void> addTaskToCategory(String docId, String taskName) async {
     try {
       // Get current date and time
-      final dateTime = DateTime.now();
-      final formattedDateTime =
-          "${dateTime.day}/${dateTime.month}/${dateTime.year} ${dateTime.hour}:${dateTime.minute}";
+      final date = dateController.text.trim();
 
       // Task data to be added
       final taskData = {
         "name": taskName,
-        "time": formattedDateTime,
+        "time": date,
       };
 
       // Update the Firestore document
